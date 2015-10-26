@@ -1,0 +1,31 @@
+---
+- hosts: all
+  remote_user: pi
+  sudo: no
+
+  vars:
+    cds_install_dir: /home/pi/clusterdemo-server
+    cds_version: master
+
+  tasks:
+
+#    - name: stop flasher
+#      service: name=flasher state=stopped
+#      sudo: yes
+
+    - name: download flasher from git
+      git: repo=git://github.com/DeMoehn/clusterdemo-server.git dest={{ cds_install_dir }} accept_hostkey=yes version={{ cds_version }} update=yes
+
+    - name: install flasher npm modules
+      npm: path={{ cds_install_dir }}
+
+    - name: copy flasherdaemon.sh script
+      copy: src=scripts/clusterdemo_server_deamon.sh dest={{ cds_install_dir }}/clusterdemo_server_deamon.sh owner=pi group=pi mode=755
+
+    - name: copy init.d script
+      copy: src=scripts/clusterdemo-server dest=/etc/init.d owner=root group=root mode=755
+      sudo: yes
+
+    - name: start clusterdemo-server
+      service: name=clusterdemo-server state=started enabled=yes
+      sudo: yes

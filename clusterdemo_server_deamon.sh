@@ -1,3 +1,3 @@
 #!/bin/bash
 cd /home/pi/clusterdemo-server
-sudo /usr/local/bin/node ./flasher.js  > /dev/null &
+sudo /usr/local/bin/node ./app.js  > /dev/null &
