@@ -1,0 +1,3 @@
+# clusterdemo-server
+CouchDB/Cloudant demo cluster server to start/stop node, flash lights, etc.
+following....
