@@ -13,14 +13,22 @@
 #      service: name=flasher state=stopped
 #      sudo: yes
 
-    - name: download flasher from git
-      git: repo=git://github.com/DeMoehn/clusterdemo-server.git dest={{ cds_install_dir }} accept_hostkey=yes version={{ cds_version }} update=yes
+    - name: download clusterdaemon from git
+      git: repo=git://github.com/DeMoehn/clusterdemo-server.git dest={{ cds_install_dir }} accept_hostkey=yes version={{ cds_version }} update=yes force=yes
 
-    - name: install flasher npm modules
+    - name: install clusterdeamon npm modules
       npm: path={{ cds_install_dir }}
 
-    - name: copy flasherdaemon.sh script
+    - name: copy clusterdemo_server_deamon.sh script
       copy: src=scripts/clusterdemo_server_deamon.sh dest={{ cds_install_dir }}/clusterdemo_server_deamon.sh owner=pi group=pi mode=755
+
+    - name: Create log files 1
+      file: path=/var/log/cds_err.log state=touch owner=root group=root mode=755 force=yes
+      sudo: yes
+
+    - name: Create log files 2
+      file: path=/var/log/cds.log state=touch owner=root group=root mode=755 force=yes
+      sudo: yes
 
     - name: copy init.d script
       copy: src=scripts/clusterdemo-server dest=/etc/init.d owner=root group=root mode=755

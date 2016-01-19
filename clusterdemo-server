@@ -11,12 +11,12 @@
 
 dir="/home/pi/clusterdemo-server"
 user="pi"
-cmd="./clusterdemo_server_daemon.sh"
+cmd="./clusterdemo_server_deamon.sh"
 
 name=`basename $0`
 pid_file="/var/run/$name.pid"
-stdout_log="/dev/null"
-stderr_log="/dev/null"
+stdout_log="/var/log/cds_err.log"
+stderr_log="/var/log/cds.log"
 
 get_pid() {
     cat "$pid_file"
